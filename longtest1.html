@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Long Test</title>
+    <style>
+
+        * {
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      height: 100%;
+      color: white;
+      font-family: Helvetica;
+    }
+
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    #cipher { 
+      margin: 0;
+      margin-bottom: 2rem;
+      padding: 0;
+    }
+
+    #text {
+      font-size: 4rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    #shift {
+      height: 128px;
+      width: 80px;
+      text-align: center;
+      font-size: 2rem;
+      outline: none;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .container {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="text">
+            <span id="greeting"></span>
+            , Mark Daniel
+        </h1>
+        <h2 id="cipher"></h2>
+        <input type="text" id="shift">
+    </div>
+
+
+    <script>
+        let gender = 'male';
+        let firstName = 'mark';
+        let lastName = 'mallari';
+        let favoriteColor = 'blue';
+        let secondFavoriteColor = 'black';
+        let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+
+        document.body.style.background = `linear-gradient(-45deg, ${favoriteColor}, ${secondFavoriteColor})`;
+        document.body.style.animation = 'gradient 15s ease infinite';
+        document.body.style.backgroundSize = '400% 400%';
+
+        document.getElementById('shift').addEventListener('input', function(e) {
+      if(!e.target.value || isNaN(e.target.value)) return;
+
+      let cipherText = '';
+      for(let char of document.getElementById('text').innerText) {
+        if(letters.indexOf(char.toUpperCase()) > -1) {
+          cipherText += letters[(letters.indexOf(char.toUpperCase()) + Number(e.target.value)) % 25];
+        }
+        else {
+          cipherText += char;
+        }
+      }
+      document.getElementById('cipher').innerText = cipherText;
+    });
+
+    function updateGreeting(gender) {
+      const greetings = {'male': 'Sir', 'female': 'Ma\'am', 'other': 'Hello'}
+      document.getElementById('greeting').innerText = greetings[gender] ?? 'Hi';
+    }
+    updateGreeting(gender);
+    </script>
+</body>
+</html>
